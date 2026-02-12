@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="registerUser">
+  <form @submit.prevent="authStore.registerUser(form.username, form.email, form.password)">
     <div>
         <label for="username">Nome de Usuário</label>
         <input v-model="form.username">
@@ -15,15 +15,18 @@
     </div>
     <div>
       <button type="submit">Registrar Usuário</button>
+      <RouterLink to="/login"><button>Já tenho uma conta</button></RouterLink>
+    </div>
+    <div> 
+      <p>{{authStore.errorMessage }}</p>
     </div>
   </form>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { useSupabase } from '@/composable/useSupabase';
-
-const supabase = useSupabase();
+import { useAuthStore } from '@/stores/authStore';
+const authStore = useAuthStore();
 
 const form = ref({
   username: '',
@@ -31,19 +34,6 @@ const form = ref({
   password: ''
 })
 
-const registerUser = async () => {
-  const { data, error } = await supabase.auth.signUp({
-    email: form.value.email,      
-    password: form.value.password,
-    options: { 
-        data: {
-            username: form.value.username,
-        }
-    }
-  });
-  
-  if (error) console.error('Erro:', error.message);
-  else console.log('Sucesso:', data);
-}
+
 
 </script>

@@ -4,7 +4,7 @@
 
 <script setup>
 import { RouterView } from 'vue-router';
-import { useAuthStore } from './composable/useAuth';
+import { useAuthStore } from '@/stores/authStore';
 import { onMounted } from 'vue';
 
 const authStore = useAuthStore();
