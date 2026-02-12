@@ -1,5 +1,6 @@
 import { supabase } from '@/utils/supabase'
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/authStore';
 
 const routes = [
   {
@@ -11,6 +12,11 @@ const routes = [
     path: '/register',
     component: () => import('@/views/Register.vue'),
     meta: { guestOnly: true }
+  },
+  {
+    path: '/user/:username',
+    component: () => import('@/views/Profile.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/',
@@ -26,13 +32,20 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  const { data: { session } } = await supabase.auth.getSession()
-  if (to.meta.guestOnly && session) return next('/');
-  if (to.meta.requiresAuth && !session) return next('/login');
-  if((to.path === '/login' || to.path === '/register') && session) return next('/');
+  const authStore = useAuthStore();
   
+  // Ensure the store is initialized (checked session at least once)
+  if (!authStore.isInitialized) {
+    await authStore.initialize();
+  }
+
+  const user = authStore.user;
+
+  if (to.meta.guestOnly && user) return next('/');
+  if (to.meta.requiresAuth && !user) return next('/login');
+  if ((to.path === '/login' || to.path === '/register') && user) return next('/');
+
   next()
 })
-
 
 export default router

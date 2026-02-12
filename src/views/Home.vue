@@ -1,6 +1,6 @@
 <template>
   <div v-if="isAuthenticated && user">
-    <h1>Welcome, {{ user.user_metadata.username }}</h1>
+    <h1>Home Page</h1>
 
     <button @click="authStore.signOut">Log Out</button>
   </div>

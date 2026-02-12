@@ -35,9 +35,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useSupabase } from '@/stores/supabaseStore';
-import { useAuthStore } from '@/stores/authStore';
 import { supabase } from '@/utils/supabase';
+import { useAuthStore } from '@/stores/authStore';
 
 const authStore = useAuthStore();
 const usernameError = ref('');
