@@ -10,7 +10,7 @@ export const useAuthStore = defineStore('authStore', () => {
     const user = ref<User | null>(null);
     const isAuthenticated = computed(() => !!user.value);
     const isInitialized = ref(false);
-
+    
     async function initialize() {
         if (isInitialized.value) return; 
 

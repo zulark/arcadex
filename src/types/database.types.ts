@@ -14,6 +14,141 @@ export type Database = {
   }
   public: {
     Tables: {
+      game_genres: {
+        Row: {
+          game_id: string
+          genre_id: number
+        }
+        Insert: {
+          game_id: string
+          genre_id: number
+        }
+        Update: {
+          game_id?: string
+          genre_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_genres_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "game_genres_genre_id_fkey"
+            columns: ["genre_id"]
+            isOneToOne: false
+            referencedRelation: "genres"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      games: {
+        Row: {
+          cover_url: string | null
+          created_at: string
+          id: string
+          release_date: string | null
+          slug: string
+          steam_app_id: number | null
+          title: string
+        }
+        Insert: {
+          cover_url?: string | null
+          created_at?: string
+          id?: string
+          release_date?: string | null
+          slug: string
+          steam_app_id?: number | null
+          title: string
+        }
+        Update: {
+          cover_url?: string | null
+          created_at?: string
+          id?: string
+          release_date?: string | null
+          slug?: string
+          steam_app_id?: number | null
+          title?: string
+        }
+        Relationships: []
+      }
+      genres: {
+        Row: {
+          id: number
+          name: string
+          slug: string
+        }
+        Insert: {
+          id?: number
+          name: string
+          slug: string
+        }
+        Update: {
+          id?: number
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      library_items: {
+        Row: {
+          finished_at: string | null
+          game_id: string
+          id: string
+          platform: string
+          playtime_minutes: number | null
+          rating: number | null
+          review: string | null
+          started_at: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          finished_at?: string | null
+          game_id: string
+          id?: string
+          platform: string
+          playtime_minutes?: number | null
+          rating?: number | null
+          review?: string | null
+          started_at?: string | null
+          status: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          finished_at?: string | null
+          game_id?: string
+          id?: string
+          platform?: string
+          playtime_minutes?: number | null
+          rating?: number | null
+          review?: string | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "library_items_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "library_items_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
